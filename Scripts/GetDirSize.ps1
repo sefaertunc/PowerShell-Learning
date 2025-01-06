@@ -1,7 +1,9 @@
-﻿function getDirSize($dir)
+﻿param([string]$mainDir = "C:\SEFA")
+
+function getDirSize($dir)
 {
     $result = ls $dir -Recurse | measure -Property Length -Sum
     return [math]::Round(($result).Sum/1GB,2)
 }
 
-getDirSize $dir
+getDirSize $mainDir
