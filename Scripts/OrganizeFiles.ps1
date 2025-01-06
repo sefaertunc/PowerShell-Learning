@@ -1,5 +1,5 @@
 param(
-    [string]$source = "C:\SEFA\Work\GIT\PowerShell-Learning\Unorganized",
+    [string]$Source = "C:\SEFA\Work\GIT\PowerShell-Learning\Unorganized",
     [string]$Destination = "C:\SEFA\Work\GIT\PowerShell-Learning\Organized"
 )
 
@@ -10,9 +10,8 @@ function CheckFolder($folder) {
     else {
         Write-Host "The folder doesn't exist"
         Write-Host "New folder is being created"
-        mkdir ./$folder
+        mkdir $folder | Out-Null
     }
-    
 }
 
-CheckFolder "Organized"
+CheckFolder $Destination
