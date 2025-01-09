@@ -1,6 +1,6 @@
 param(
-    [string]$Source = "C:\SEFA\Work\GIT\PowerShell-Learning\File Organization\Unorganized",
-    [string]$Destination = "C:\SEFA\Work\GIT\PowerShell-Learning\File Organization\Organized"
+    [string]$Source = "C:\SEFA\Work\GIT\PowerShell-Learning\File-Organization\Unorganized",
+    [string]$Destination = "C:\SEFA\Work\GIT\PowerShell-Learning\File-Organization\Organized"
 )
 
 function CheckFolder([string]$folder) {
@@ -28,12 +28,18 @@ function DisplayFolderStatistics ([string]$var_folder) {
 
 function CopyFiles($var_destination) {
     $files = Get-ChildItem $Source -Recurse | Where-Object {!$_.PSIsContainer}
-    return $files
+    foreach($file in $files){
+        $ext = $file.Extension.Replace(".","")
+        $extdestdir = "$Destination\$ext"
+        CheckFolder $extdestdir
+
+        Copy-Item $file.FullName $extdestdir
+    }
 }
 
 
 CheckFolder $Destination
 DisplayFolderStatistics $Source
-#CopyFiles $Destination
+CopyFiles $Source
 
 
