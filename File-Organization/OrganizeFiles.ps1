@@ -35,11 +35,15 @@ function CopyFiles($var_destination) {
 
         Copy-Item $file.FullName $extdestdir
     }
+    $allstats = @()
+    $dirs = Get-ChildItem $Destination | Where-Object {$_.PSIsContainer}
+    foreach ($currentItemName in $dirs) {
+        $allstats += DisplayFolderStatistics $currentItemName.FullName
+    }
+    $allstats | Sort-Object size -Descending
 }
 
 
-CheckFolder $Destination
-DisplayFolderStatistics $Source
 CopyFiles $Source
 
 
