@@ -27,13 +27,13 @@ function DisplayFolderStatistics ([string]$var_folder) {
 }
 
 function CopyFiles($var_destination) {
-    $files = Get-ChildItem $Source -Recurse | Where-Object {$_.PSIsContainer}
-    foreach($file in $files){
-        $file | Copy-Item $var_destination
-    }
+    $files = Get-ChildItem $Source -Recurse | Where-Object {!$_.PSIsContainer}
+    return $files
 }
 
-CopyFiles $Destination
 
-# CheckFolder $Destination
-# DisplayFolderStatistics $Source
+CheckFolder $Destination
+DisplayFolderStatistics $Source
+#CopyFiles $Destination
+
+
