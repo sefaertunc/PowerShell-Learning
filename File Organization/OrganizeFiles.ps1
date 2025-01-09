@@ -22,9 +22,18 @@ function DisplayFolderStatistics ([string]$var_folder) {
     $stats.path = $var_folder
     $stats.count = $totals.Count
     $stats.size = [math]::Round($totals.Sum/1MB,2)
-    
+
     return $stats
 }
 
-CheckFolder $Destination
-DisplayFolderStatistics $Source
+function CopyFiles($var_destination) {
+    $files = Get-ChildItem $Source -Recurse | Where-Object {$_.PSIsContainer}
+    foreach($file in $files){
+        $file | Copy-Item $var_destination
+    }
+}
+
+CopyFiles $Destination
+
+# CheckFolder $Destination
+# DisplayFolderStatistics $Source
