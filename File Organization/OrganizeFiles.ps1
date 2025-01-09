@@ -17,10 +17,12 @@ function CheckFolder([string]$folder) {
 function DisplayFolderStatistics ([string]$var_folder) {
     $files = Get-ChildItem $var_folder -Recurse | Where-Object {!$_.PSIsContainer}
     $totals = $files | Measure-Object -Property Length -Sum
-    $stats = "" | Select path,count,size
+
+    $stats = "" | Select-Object path,count,size
     $stats.path = $var_folder
     $stats.count = $totals.Count
     $stats.size = [math]::Round($totals.Sum/1MB,2)
+    
     return $stats
 }
 
